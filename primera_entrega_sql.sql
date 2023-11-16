@@ -41,5 +41,27 @@ CREATE TABLE IF NOT EXISTS torneo.equipo(
 
 USE torneo;
 
-select * from jugadores_categoria
+DELIMITER $$
+CREATE FUNCTION calcularPromedioNivel()
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE totalNiveles INT;
+    DECLARE cantidadJugadores INT;
+    DECLARE promedio INT;
+
+    SELECT SUM(nivel) INTO totalNiveles FROM jugadores;
+    SELECT COUNT(*) INTO cantidadJugadores FROM jugadores;
+
+    IF cantidadJugadores > 0 THEN
+        SET promedio = totalNiveles / cantidadJugadores;
+    ELSE
+        SET promedio = 0;
+    END IF;
+    RETURN promedio;
+END $$
+DELIMITER ;
+
+SELECT calcularPromedioNivel() AS ResultadoPromedio;
+
 
