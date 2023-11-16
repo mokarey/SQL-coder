@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS torneo.jugadores(
 
 CREATE TABLE IF NOT EXISTS torneo.jugadores_categoria(
 	id_jugadores_categoria INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nombre VARCHAR(50) NOT NULL,
 	id_jugadores INT NOT NULL,
 	niveles VARCHAR(30) NOT NULL,
 	posiciones INT NOT NULL
@@ -37,3 +38,8 @@ CREATE TABLE IF NOT EXISTS torneo.equipo(
 	niveles VARCHAR(30) NOT NULL,
 	posiciones INT NOT NULL
 );
+
+USE torneo;
+
+select * from jugadores_categoria
+
