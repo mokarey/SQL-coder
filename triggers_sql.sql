@@ -91,13 +91,35 @@ SELECT contarEquiposDiamante() AS CantidadEquiposDiamante;
 
 -- TRIGER NUMERO 1
 -- TABLA LOG
-USE torneo;
 
+USE torneo;
 CREATE TABLE equipos_categoria_log (
     id_equipos_categoria_log INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_equipos INT NOT NULL,
     nombre VARCHAR(50) NOT NULL,
     niveles VARCHAR(30) NOT NULL,
     posiciones INT NOT NULL,
+    usuario_log VARCHAR(50),
     fecha_log TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+-- TRIGGER
+
+USE torneo;
+SELECT * FROM equipos_categoria_log;
+
+USE torneo;
+DELIMITER $$
+
+CREATE TRIGGER after_insert_equipos_categoria
+AFTER INSERT ON equipos_categoria
+FOR EACH ROW
+BEGIN
+    INSERT INTO equipos_categoria_log (id_equipos, nombre, niveles, posiciones, usuario, fecha_log)
+    VALUES (NEW.id_equipos, NEW.nombre, NEW.niveles, NEW.posiciones, CURRENT_USER(), CURRENT_TIMESTAMP);
+END //
+
+DELIMITER ;
+
+
